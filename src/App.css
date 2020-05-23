@@ -1,0 +1,39 @@
+:root {
+  --board-side: min(100vw, 100vh);
+  --tile-side: calc(var(--board-side) / 3);
+}
+
+main {
+  display: inline-block;
+}
+
+aside {
+  display: inline-block;
+  padding: 8px;
+}
+
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 0px;
+  padding: 0px;
+  background-color: #21272a;
+  width: var(--board-side);
+  height: var(--board-side);
+}
+
+.tile {
+  width: var(--tile-side);
+  height: var(--tile-side);
+  overflow: 'hidden';
+}
+
+input[type="button"] {
+  background-color: #0043ce
+    /* Blue 30 */
+  ;
+  font: inherit;
+  cursor: pointer;
+  font-size: 1.8em;
+}
