@@ -13,6 +13,7 @@
 
 <script>
 import Tile from "./Tile.vue";
+import logic from './logic.js';
 
 export default {
   name: "Board",
@@ -25,6 +26,9 @@ export default {
   },
   setup(props) {
     console.log(props.imageSrc);
+    console.log(logic.game.board);
+    logic.game.shuffle();
+    console.log(logic.game.board);
   }
 };
 </script>
