@@ -2,12 +2,9 @@
   <div id="app">
     <Board :imageSrc="require('./assets/default.jpg')" class="board"/>
     <aside>
-      8-puzzle
+      8-puzzle<br>
       <br />
-      <img src="./assets/default.jpg" style="width: 60px; height: 60px;" />
-      <div style="width: 120px; height: 120px; overflow: hidden;">
-      <img src="./assets/default.jpg" style="width: 240px; height: 240px; margin-left: -120px;" />
-      </div>
+      <img src="./assets/default.jpg" style="width: calc(var(--tile-side) * 0.66); height: calc(var(--tile-side) * 0.66);" />
       <br />
       <label for="file" style="cursor: pointer;">
         <u>Choose a file...</u>
@@ -35,16 +32,15 @@
 <script>
 import Board from "./components/Board.vue";
 
+function doSomething(i) {
+  i++;
+}
 export default {
   name: "App",
   components: {
     Board
   },
   setup() {
-    console.log("debugging...");
-    let x = 2;
-    x++;
-    console.log(x);
   }
 };
 </script>

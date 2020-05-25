@@ -1,19 +1,24 @@
 <template>
   <div class="grid-container">
-    <Tile :number="1" :row="1" :column="1" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="2" :row="1" :column="2" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="3" :row="1" :column="3" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="4" :row="2" :column="1" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="5" :row="2" :column="2" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="6" :row="2" :column="3" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="7" :row="3" :column="1" :imageSrc="imageSrc" class="tile" />
-    <Tile :number="8" :row="3" :column="2" :imageSrc="imageSrc" class="tile" />
+    <Tile
+      v-for="(item, index) in game.board"
+      v-bind:key="index"
+      :number="item"
+      :row="Math.floor(index / 3 + 1)"
+      :column="1 + index % 3"
+      :imageSrc="imageSrc"
+      :opacity="game.isBlank(index) ? '0.05' : '1'"
+      :canSlide="game.canSlide(index)"
+      @click="onClick(item)"
+      class="tile"
+    />
   </div>
 </template>
 
 <script>
 import Tile from "./Tile.vue";
-import logic from './logic.js';
+import logic from "./logic.js";
+import { ref, reactive } from "vue";
 
 export default {
   name: "Board",
@@ -24,11 +29,22 @@ export default {
     msg: String,
     imageSrc: String
   },
+  methods: {
+    onClick: n => {
+      console.log("Move: " + n);
+    }
+  },
   setup(props) {
+    const game = reactive(logic.game);
     console.log(props.imageSrc);
-    console.log(logic.game.board);
-    logic.game.shuffle();
-    console.log(logic.game.board);
+    game.shuffle();
+    //const board = ref(logic.game.board);
+    //console.log(board.value);
+    console.log(game.board);
+    return {
+      //board,
+      game
+    };
   }
 };
 </script>
