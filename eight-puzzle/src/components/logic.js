@@ -37,7 +37,11 @@ let shuffle = (arr) => {
 class Game {
     constructor() {
         this.board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        this.shuffle = () => shuffle(this.board);
+        this.count = 0;
+        this.shuffle = () => {
+            shuffle(this.board);
+            this.count = 0;
+        };
         /**
          * @param {number} i
          */
@@ -64,10 +68,25 @@ class Game {
          */
         this.canSlide = (i) => {
             let j = this.getBlankIndex();
-            let rowI = this.getRow(i), colI = this.getColumn(i), rowJ = this.getRow(j), colJ = this.getColumn(j);
-            return (rowI == rowJ && Math.abs(colI - colJ) == 1)
-                || (colI == colJ && Math.abs(rowI - rowJ) == 1);
+            let rowI = this.getRow(i), columnI = this.getColumn(i), rowJ = this.getRow(j), columnJ = this.getColumn(j);
+            return (rowI == rowJ && Math.abs(columnI - columnJ) == 1)
+                || (columnI == columnJ && Math.abs(rowI - rowJ) == 1);
         }
+        /**
+         * @param {number} i
+         */
+        this.slide = (i) => {
+            let canSlide = this.canSlide(i);
+            if (canSlide) {
+                console.log(true);
+                let j = this.getBlankIndex();
+                let k = this.board[j];
+                this.board[j] = this.board[i];
+                this.board[i] = k;
+                this.count++;
+            }
+            return canSlide;
+        };
     };
 }
 

@@ -1,15 +1,16 @@
 <template>
-  <div class="grid-container">
+  <div class="grid-container" :key="componentKey">
+    <!-- Why :key="componentKey"? Read this: https://michaelnthiessen.com/force-re-render/ -->
     <Tile
-      v-for="(item, index) in game.board"
-      v-bind:key="index"
-      :number="item"
-      :row="Math.floor(index / 3 + 1)"
-      :column="1 + index % 3"
+      v-for="(number, index) in game.board"
+      :key="index"
+      :number="number"
+      :row="game.getRow(index) + 1"
+      :column="game.getColumn(index) + 1"
       :imageSrc="imageSrc"
       :opacity="game.isBlank(index) ? '0.05' : '1'"
       :canSlide="game.canSlide(index)"
-      @click="onClick(item)"
+      @click="onClick(index, componentKey)"
       class="tile"
     />
   </div>
@@ -29,21 +30,25 @@ export default {
     msg: String,
     imageSrc: String
   },
-  methods: {
-    onClick: n => {
-      console.log("Move: " + n);
-    }
-  },
   setup(props) {
     const game = reactive(logic.game);
-    console.log(props.imageSrc);
     game.shuffle();
-    //const board = ref(logic.game.board);
-    //console.log(board.value);
-    console.log(game.board);
+
+    let componentKey = ref(false);
+    let onClick = (i) => {
+      console.log(i);
+      if (logic.game.slide(i)){
+        componentKey.value = !componentKey.value;
+      }
+      console.log('Move: ' + i + ', count: ' + logic.game.count + ', board: ' + game.board.join());
+      console.log(logic.game.board.join());
+    };
+
+    console.log('Board: ' + game.board.join());
     return {
-      //board,
-      game
+      game,
+      componentKey,
+      onClick
     };
   }
 };

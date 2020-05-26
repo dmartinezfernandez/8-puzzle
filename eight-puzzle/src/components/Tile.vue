@@ -9,7 +9,6 @@
       'cursor': canSlide ? 'pointer' : 'default',
       'opacity': opacity
       }"
-    v-on:click="onclick(number, canSlide)"
   >
     <img
       :src="imageSrc"
@@ -25,8 +24,6 @@
 </template>
 
 <script>
-import logic from "./logic.js";
-
 export default {
   name: "Tile",
   props: {
@@ -36,19 +33,6 @@ export default {
     imageSrc: String,
     opacity: String,
     canSlide: Boolean
-  },
-  methods: {
-    onclick: (number, canSlide) => {
-      if (!canSlide) console.log("Can't slide " + number + '.');
-      else {
-        console.log(number);
-        logic.clicks.push(number);
-        console.log(logic.clicks);
-      }
-    }
-  },
-  setup(props) {
-    return {};
   }
 };
 </script>
