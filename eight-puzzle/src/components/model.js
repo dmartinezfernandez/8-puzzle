@@ -10,7 +10,7 @@ let parity = (arr) => {
     let count = 0;
     for (let i = 0; i < arr.length - 1; i++) {
         for (let j = i + 1; j < arr.length; j++) {
-            if (arr[i] > arr[j])
+            if (arr[i] > arr[j] && arr[i] != 9 && arr[j] != 9)
                 count++;
         }
     }
@@ -34,11 +34,20 @@ let shuffle = (arr) => {
         arr[i] = arr2[i];
 };
 
+const target = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 class Game {
     constructor() {
-        this.board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        this.board = [...target];
         this.count = 0;
+        this.initialize = () => {
+            console.clear();
+            for (let i = 0; i < target.length; i++)
+                this.board[i] = target[i];
+            this.count = 0;
+        };
         this.shuffle = () => {
+            console.clear();
             shuffle(this.board);
             this.count = 0;
         };
@@ -78,7 +87,6 @@ class Game {
         this.slide = (i) => {
             let canSlide = this.canSlide(i);
             if (canSlide) {
-                console.log(true);
                 let j = this.getBlankIndex();
                 let k = this.board[j];
                 this.board[j] = this.board[i];

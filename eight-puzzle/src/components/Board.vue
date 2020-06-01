@@ -18,7 +18,7 @@
 
 <script>
 import Tile from "./Tile.vue";
-import logic from "./logic.js";
+import model from "./model.js";
 import { ref, reactive } from "vue";
 
 export default {
@@ -31,24 +31,29 @@ export default {
     imageSrc: String
   },
   setup(props) {
-    const game = reactive(logic.game);
-    game.shuffle();
-
-    let componentKey = ref(false);
-    let onClick = (i) => {
-      console.log(i);
-      if (logic.game.slide(i)){
+    const game = reactive(model.game);
+    const componentKey = ref(false);
+    const onClick = i => {
+      if (model.game.slide(i)) {
         componentKey.value = !componentKey.value;
       }
-      console.log('Move: ' + i + ', count: ' + logic.game.count + ', board: ' + game.board.join());
-      console.log(logic.game.board.join());
+      console.log(
+        "Move: " +
+          i +
+          ", count: " +
+          model.game.count +
+          ", board: " +
+          game.board.join()
+      );
     };
-
-    console.log('Board: ' + game.board.join());
+    const refresh = () => {
+      componentKey.value = !componentKey.value;
+    };
     return {
       game,
       componentKey,
-      onClick
+      onClick,
+      refresh
     };
   }
 };
