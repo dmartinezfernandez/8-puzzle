@@ -20,7 +20,7 @@ let parity = (arr) => {
 /**
  * @param {Number[]} arr
  */
-let shuffle = (arr) => {
+let randomShuffle = (arr) => {
     let arr1 = [], arr2 = [], par = parity(arr);
     do {
         arr1 = [...arr];
@@ -34,6 +34,30 @@ let shuffle = (arr) => {
         arr[i] = arr2[i];
 };
 
+/**
+ * @param {Game} game
+ */
+let kidsShuffle = (game) => {
+    game.board = [...target];
+    const crazy = 1024;
+    let k = 0;
+    let n = 1 + Math.floor(Math.random() * 5); // Prevent infinite loops.
+    let next = false;
+    for (let i = 0; i < n; i++) {
+        next = false;
+        while (!next) {
+            if (++k >= crazy) // Prevent infinite loops.
+                break;
+            let j = Math.floor(Math.random() * 9);
+            if (game.board[j] == j + 1 && game.canSlide(j)) {
+                game.slide(j);
+                next = true;
+            }
+        }
+    }
+};
+
+
 const target = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 class Game {
@@ -42,13 +66,41 @@ class Game {
         this.count = 0;
         this.initialize = () => {
             console.clear();
+            console.log("initialize()");
             for (let i = 0; i < target.length; i++)
                 this.board[i] = target[i];
             this.count = 0;
         };
-        this.shuffle = () => {
+        this.shuffle = (kidsMode) => {
             console.clear();
-            shuffle(this.board);
+            console.log("*" + kidsMode + "*");
+            if (!kidsMode){
+                randomShuffle(this.board);
+            }
+            else {
+                kidsShuffle(this);
+                /*
+                this.board = [...target];
+                const crazy = 1024;
+                let k = 0;
+                let n = 1 + Math.floor(Math.random() * 5); // Prevent infinite loops.
+                let next = false;
+                for (let i = 0; i < n; i++) {
+                    console.log('i = ' + i);
+                    next = false;
+                    while (!next) {
+                        if (++k >= crazy) // Prevent infinite loops.
+                            break;
+                        let j = Math.floor(Math.random() * 9);
+                        if (this.board[j] == j + 1 && this.canSlide(j)) {
+                            console.log('OK ' + this.board.join());
+                            this.slide(j);
+                            next = true;
+                        }
+                    }
+                }
+                */
+            }
             this.count = 0;
         };
         /**

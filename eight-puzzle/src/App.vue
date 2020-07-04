@@ -4,14 +4,24 @@
 
     <!-- Controls -->
     <aside>
-      8-puzzle
-      <br />
+      <input type="button" value="Shuffle" @click="shuffle" />&nbsp;
+      <input type="button" value="Initialize" @click="initialize" />
       <br />
       <img
         src="./assets/default.jpg"
-        style="width: calc(var(--tile-side) * 0.66); height: calc(var(--tile-side) * 0.66);"
+        style="width: calc(var(--tile-side) * 0.66); height: calc(var(--tile-side) * 0.66); margin-top: 8px;"
       />
       <br />
+      <br>
+      8-puzzle
+      <br />
+      <a href=".?mode=kids">Kids</a>/<a href=".?mode=random">random</a> mode
+      <br />
+      <footer class="darker">
+        &copy; 2020 Daniel Martínez Fernández
+        <br />MIT License
+      </footer>
+      
       <div style="display: none;">
         <!-- Hidden file input: -->
         <input type="file" name="file" id="file" ref="fileInput" />
@@ -20,10 +30,7 @@
         <br />
         <br />
       </div>
-      <input type="button" value="Shuffle" @click="shuffle" />&nbsp;
-      <input type="button" value="Initialize" @click="initialize" />
       <br />
-
       <!--        3x3 tiles square...
         <br />? https://codepen.io/Escu/pen/KVLBYP
         <br />
@@ -35,11 +42,7 @@
 
         <br />https://www.cs.princeton.edu/courses/archive/spr10/cos226/assignments/8puzzle.html
       -->
-      <br />
-      <footer class="darker">
-        &copy; 2020 Daniel Martínez Fernández
-        <br />MIT License
-      </footer>
+
     </aside>
   </div>
 </template>
@@ -58,6 +61,9 @@ export default {
     Board
   },
   setup() {
+    let kidsMode =
+      new URLSearchParams(window.location.search).get("mode") === "kids";
+    console.log("?mode=kids " + kidsMode);
     const changePicture = ref(null);
     const fileInput = ref(null);
     const board = ref(null);
@@ -68,7 +74,8 @@ export default {
       };
     });
     const shuffle = ref(() => {
-      model.game.shuffle();
+      console.log("suffle =... " + kidsMode);
+      model.game.shuffle(kidsMode);
       board.value.refresh();
     });
     const initialize = ref(() => {
@@ -106,5 +113,6 @@ input[type="button"] {
   background-color: #0043ce /* Blue 30 */;
   font: inherit;
   cursor: pointer;
+  font-size: 1.8em;
 }
 </style>>
