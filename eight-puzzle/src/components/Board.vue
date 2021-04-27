@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container" :key="componentKey">
     <!-- Why :key="componentKey"? Read this: https://michaelnthiessen.com/force-re-render/ -->
-    <Tile
+    <Tile2
       v-for="(number, index) in game.board"
       :key="index"
       :number="number"
@@ -17,24 +17,27 @@
 </template>
 
 <script>
-import Tile from "./Tile.vue";
-import model from "./model.js";
 import { ref, reactive } from "vue";
+import model from "./model.js";
+import Tile2 from "./Tile2.vue";
+import Tile from "./Tile.vue";
 
 export default {
   name: "Board",
   components: {
-    Tile
+    Tile2,
+    Tile,
   },
   props: {
     msg: String,
-    imageSrc: String
+    imageSrc: String,
   },
   setup(props) {
     const game = reactive(model.game);
     const componentKey = ref(false);
-    const onClick = i => {
+    const onClick = (i) => {
       if (model.game.slide(i)) {
+        // Force re-render.
         componentKey.value = !componentKey.value;
       }
       console.log(
@@ -53,9 +56,9 @@ export default {
       game,
       componentKey,
       onClick,
-      refresh
+      refresh,
     };
-  }
+  },
 };
 </script>
 

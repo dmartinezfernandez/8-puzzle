@@ -74,7 +74,7 @@ class Game {
         this.shuffle = (kidsMode) => {
             console.clear();
             console.log("*" + kidsMode + "*");
-            if (!kidsMode){
+            if (!kidsMode) {
                 randomShuffle(this.board);
             }
             else {

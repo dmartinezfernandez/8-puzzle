@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <Board :imageSrc="require('./assets/default.jpg')" class="board" ref="board" />
+    <Board
+      :imageSrc="require('./assets/default.jpg')"
+      class="board"
+      ref="board"
+    />
 
     <!-- Controls -->
     <aside>
@@ -9,20 +13,24 @@
       <br />
       <img
         src="./assets/default.jpg"
-        style="width: calc(var(--tile-side) * 0.66); height: calc(var(--tile-side) * 0.66); margin-top: 8px;"
+        style="
+          width: calc(var(--tile-side) * 0.66);
+          height: calc(var(--tile-side) * 0.66);
+          margin-top: 8px;
+        "
       />
       <br />
-      <br>
+      <br />
       8-puzzle
       <br />
       <a href=".?mode=kids">Kids</a>/<a href=".?mode=random">random</a> mode
       <br />
       <footer class="darker">
-        &copy; 2020 Daniel Martínez Fernández
+        &copy; 2021 Daniel Martínez Fernández
         <br />MIT License
       </footer>
-      
-      <div style="display: none;">
+
+      <div style="display: none">
         <!-- Hidden file input: -->
         <input type="file" name="file" id="file" ref="fileInput" />
         <!-- Customized button for file input: -->
@@ -31,6 +39,7 @@
         <br />
       </div>
       <br />
+
       <!--        3x3 tiles square...
         <br />? https://codepen.io/Escu/pen/KVLBYP
         <br />
@@ -42,7 +51,6 @@
 
         <br />https://www.cs.princeton.edu/courses/archive/spr10/cos226/assignments/8puzzle.html
       -->
-
     </aside>
   </div>
 </template>
@@ -50,15 +58,14 @@
 <script>
 import { ref, onMounted } from "vue";
 import Board from "./components/Board.vue";
-import model from "./components/model.js";
+import model from "./components/model";
+import Tile2 from "./components/Tile2.vue";
 
-function doSomething(i) {
-  i++;
-}
 export default {
   name: "App",
   components: {
-    Board
+    Board,
+    Tile2,
   },
   setup() {
     let kidsMode =
@@ -73,6 +80,7 @@ export default {
         fileInput.value.click();
       };
     });
+
     const shuffle = ref(() => {
       console.log("suffle =... " + kidsMode);
       model.game.shuffle(kidsMode);
@@ -87,9 +95,9 @@ export default {
       fileInput,
       board,
       shuffle,
-      initialize
+      initialize,
     };
-  }
+  },
 };
 </script>
 
