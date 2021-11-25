@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Board
+      :key="componentKey"
       :imageSrc="require('./assets/default.jpg')"
       class="board"
       ref="board"
@@ -59,13 +60,11 @@
 import { ref, onMounted } from "vue";
 import Board from "./components/Board.vue";
 import model from "./components/model";
-import Tile2 from "./components/Tile2.vue";
 
 export default {
   name: "App",
   components: {
     Board,
-    Tile2,
   },
   setup() {
     let kidsMode =
@@ -73,7 +72,7 @@ export default {
     console.log("?mode=kids " + kidsMode);
     const changePicture = ref(null);
     const fileInput = ref(null);
-    const board = ref(null);
+    const componentKey = ref(false);
     onMounted(() => {
       changePicture.value = () => {
         // Trigger click event on file input HTML element from customized button.
@@ -82,20 +81,21 @@ export default {
     });
 
     const shuffle = ref(() => {
-      console.log("suffle =... " + kidsMode);
+      console.clear();
       model.game.shuffle(kidsMode);
-      board.value.refresh();
+      componentKey.value = !componentKey.value;
     });
     const initialize = ref(() => {
+      console.clear();
       model.game.initialize();
-      board.value.refresh();
+      componentKey.value = !componentKey.value;
     });
     return {
       changePicture,
       fileInput,
-      board,
       shuffle,
       initialize,
+      componentKey,
     };
   },
 };

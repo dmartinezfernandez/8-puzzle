@@ -1,4 +1,4 @@
-// @ts-check
+"use strict";
 import { reactive } from 'vue'
 
 // https://www.cs.princeton.edu/courses/archive/spr10/cos226/assignments/8puzzle.html
@@ -65,15 +65,11 @@ class Game {
         this.board = [...target];
         this.count = 0;
         this.initialize = () => {
-            console.clear();
-            console.log("initialize()");
             for (let i = 0; i < target.length; i++)
                 this.board[i] = target[i];
             this.count = 0;
         };
         this.shuffle = (kidsMode) => {
-            console.clear();
-            console.log("*" + kidsMode + "*");
             if (!kidsMode) {
                 randomShuffle(this.board);
             }
